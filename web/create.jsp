@@ -14,15 +14,16 @@
     <body>
         <h1>Enter User Information</h1>
         <script type="text/javascript" src="spin.js"></script>
-        <script type="text/javascript" src="submitLogin.js"></script>
+        <script type="text/javascript" src="submitUser.js"></script>
         
         Username: <input type="text" name="username" value=""  id="user" /><br>
         Password: <input type="password" name="password" value=""  id="pass" /><br>
-        <input id="loginButton" type="button" value="Send Login" name="send" onclick="submitLogin(); startSpinner();" align="middle"/> 
+        
+        <input id="loginButton" type="button" value="Send Login" name="send" onclick="submitUser(); startSpinner();" align="middle"/> 
         <p id="LoginStatus"></p>
                 
                 
-        <p id="LoginResult"> </p>
+        <p id="UserCreateResult"> </p>
         
     </body>
 </html>

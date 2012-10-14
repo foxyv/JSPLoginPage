@@ -21,7 +21,7 @@
 
     <body>
         <iframe width="300" src="login.jsp" seamless="seamless"></iframe>
-
+        <a href="create.jsp">Create a User!</a>
 
 
     </body>
