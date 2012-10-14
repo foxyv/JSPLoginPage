@@ -15,16 +15,16 @@ public class ServerLoginDriver {
 
     public static void main(String[] args) {
 
-        ServerLogin rawr = new ServerLogin();
+        SQLServerLogin rawr = new SQLServerLogin();
         rawr.ConnectToUserDB();
 
         try {
-            rawr.CreateUser("Sasdaomeone11", "APASSwordasd");
+            rawr.CreateUser("aflack", "aack");
         } catch (Exception ex) {
             Logger.getLogger(ServerLoginDriver.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (rawr.AttemptLogin("Someone", "APASSworddd") == ServerLogin.USERAUTHENTICATED) {
+        if (rawr.ValidateLogin("aflack", "aack") == SQLServerLogin.USERAUTHENTICATED) {
             System.out.println("Success!");
         }
         else System.out.println("Login Failed!");

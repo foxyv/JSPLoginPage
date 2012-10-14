@@ -8,11 +8,19 @@ function submitLogin(publicKey)
 {
     username = document.getElementById('user').value;
     password = document.getElementById('pass').value;
-       
-    //Test, only works on sane browsers IE: Not IE
-    LoginXMLRequestAndHttpResponse = new XMLHttpRequest();
     
-    LoginXMLRequestAndHttpResponse.open("POST","LoginAttempt.jsp",true);
+    //Code from W3C for multi-browser support of AJAX
+    var LoginXMLRequestAndHttpResponse;
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+        LoginXMLRequestAndHttpResponse=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+        LoginXMLRequestAndHttpResponse=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    LoginXMLRequestAndHttpResponse.open("POST","LoginSession.jsp",true);
     LoginXMLRequestAndHttpResponse.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     LoginXMLRequestAndHttpResponse.send("username=" + username + "&password=" + password);
     
@@ -23,7 +31,7 @@ function submitLogin(publicKey)
         radius: 5, // The radius of the inner circle
         corners: 1, // Corner roundness (0..1)
         rotate: 0, // The rotation offset
-        color: '#000', // #rgb or #rrggbb
+        color: '#900000', // #rgb or #rrggbb
         speed: 1, // Rounds per second
         trail: 60, // Afterglow percentage
         shadow: false, // Whether to render a shadow
@@ -33,14 +41,18 @@ function submitLogin(publicKey)
         top: 'auto', // Top position relative to parent in px
         left: 'auto' // Left position relative to parent in px
     };
+    
     var target = document.getElementById('LoginStatus');
     var spinner = new Spinner(opts).spin(target);
+    
             
     LoginXMLRequestAndHttpResponse.onreadystatechange=function()
     {
+        
         if(LoginXMLRequestAndHttpResponse.readyState == 4 && LoginXMLRequestAndHttpResponse.status==200)
         {
             document.getElementById("LoginResult").innerHTML=LoginXMLRequestAndHttpResponse.responseText;
+            
             spinner.stop();
         }
     }    

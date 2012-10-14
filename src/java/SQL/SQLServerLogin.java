@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author Sweord
  */
-public class ServerLogin {
+public class SQLServerLogin {
 
     /*
      * Connection object for the database holding user information. Initialized
@@ -31,15 +31,17 @@ public class ServerLogin {
     public static int USERNOTFOUND = 1;
     public static int BADPASS = 2;
     public static int USERALREADYEXISTS = 4;
-    
+    public static int INVALIDUSERNAME = 5;
+    public static int USERCREATED = 6;
     public static int SOMETHINGWENTWRONG = 10;
+    
     
     private String DBUsername = "loginClient";
     private String DBPassword = "yCiVRarmXnJS6oJ";
     private String DBurlString = "jdbc:mysql://localhost:3306/userspace";
     
     
-    MessageDigest SHA512; 
+    MessageDigest SHA512;
     
 
     //Connects to the user Database
@@ -70,31 +72,39 @@ public class ServerLogin {
             
 
         } catch (Exception ex) {
-            Logger.getLogger(ServerLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SQLServerLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     //Initiate a login attempt. Returns USERAUTHENTICATED to indicate the credentials are valid.
-    public int AttemptLogin(String username, String password) {
+    public int ValidateLogin(String username, String password) {
 
         try {
+             
+            //TODO: add username string validation (No special characters etc)
+            
             if (userDatabase != null) {
-                if (userDatabase.isValid(100));
+                if (!userDatabase.isValid(100)) return SOMETHINGWENTWRONG;
             }
             
             //Use the SHA512 algorithm to produce a hash of the password in a byte array
             byte[] passwordAttemptDigested = MessageDigest.getInstance("SHA-512").digest(password.getBytes());
             
-            //Creat the prepared statment for querying our user table
-            PreparedStatement checkUsernamePasswordDigest = userDatabase.prepareCall("SELECT * FROM loginusers.loginusers where username='" + username + "';");
+            System.out.println("RAWR! Attempting SQL query!");
             
+            //Creat the prepared statment for querying our user table (Make sure all input is sanitized)
+            PreparedStatement checkUsernamePasswordDigest = userDatabase.prepareCall("SELECT * FROM loginusers.loginusers where username=?;");
+            checkUsernamePasswordDigest.setString(1, username);
+            
+            System.out.println(checkUsernamePasswordDigest);
             
             //Get a result set form the executed query
             ResultSet results = checkUsernamePasswordDigest.executeQuery();
+            
 
-            //If there are any results go to the first
+            //If there are any results go to the first otherwise return USERNOTFOUND
             if (results.first()) {
-                //If the username is correct
+                //Check the username.
                 if (results.getString("username").equals(username)) {
                     //Check to see if the password hash in the resultSet matches what the user supplied
                     byte[] passwordHash = results.getBytes("password");
@@ -108,7 +118,7 @@ public class ServerLogin {
 
 
         } catch (Exception ex) {
-            Logger.getLogger(ServerLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SQLServerLogin.class.getName()).log(Level.SEVERE, null, ex);
             return SOMETHINGWENTWRONG;
         }
         
@@ -119,7 +129,7 @@ public class ServerLogin {
      * 
      */
     public int CreateUser(String username, String password) throws Exception{
-        int loginCheck = AttemptLogin(username,"");
+        int loginCheck = ValidateLogin(username,"");
         SHA512 = MessageDigest.getInstance("SHA-512");
         byte[] digestedPassword = SHA512.digest(password.getBytes());
         
@@ -131,10 +141,13 @@ public class ServerLogin {
             insertStatement.setBytes(2, digestedPassword);
             insertStatement.execute();
         }
-        else throw new Exception("User Already Exists");
+        else if(loginCheck == BADPASS)return USERALREADYEXISTS;
+        
             
         
         
-        return 0;
+        return USERCREATED;
     }
+    
+    
 }
