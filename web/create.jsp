@@ -12,18 +12,19 @@
         <title>Create User</title>
     </head>
     <body>
-        <h1>Enter User Information</h1>
-        <script type="text/javascript" src="spin.js"></script>
-        <script type="text/javascript" src="submitUser.js"></script>
-        
-        Username: <input type="text" name="username" value=""  id="user" /><br>
-        Password: <input type="password" name="password" value=""  id="pass" /><br>
-        
-        <input id="loginButton" type="button" value="Send Login" name="send" onclick="submitUser(); startSpinner();" align="middle"/> 
-        <p id="LoginStatus"></p>
-                
-                
-        <p id="UserCreateResult"> </p>
-        
+        <div align="center">
+            <h2>Create User</h2>
+            <script type="text/javascript" src="spin.js"></script>
+            <script type="text/javascript" src="submit.js"></script>
+
+            Username: <input type="text" name="username" value=""  id="user" /><br>
+            Password: <input type="password" name="password" value=""  id="pass" /><br><br>
+
+            <input id="loginButton" type="button" value="Create Login" name="send" onclick="submitUser();" align="middle"/> <br><br>
+            <p id="UserCreateStatus"></p>
+
+
+            <p id="UserCreateResult"> </p>
+        </div>
     </body>
 </html>

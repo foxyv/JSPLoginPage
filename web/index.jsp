@@ -20,9 +20,9 @@
 
 
     <body>
-        <iframe width="300" src="login.jsp" seamless="seamless"></iframe>
-        <a href="create.jsp">Create a User!</a>
-
+        <div align="center">
+            <iframe width="500" src="login.jsp" seamless="seamless" height="500"></iframe>
+        </div>
 
     </body>
 </html>

@@ -22,8 +22,9 @@
             
             sl.ConnectToUserDB();
             
+            
             if (sl.CreateUser(username, password) == SQLServerLogin.USERCREATED) {
-        %>Success! <a href="index.jsp">Return to index!</a><%  
+        %>Success! <a href="login.jsp">Return to login!</a><%  
             } 
             else {
                 %>Login failed!<%                    

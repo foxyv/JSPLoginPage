@@ -12,15 +12,20 @@
         <title>Login</title>
     </head>
     <body>
-        <script type="text/javascript" src="spin.js"></script>
-        <script type="text/javascript" src="submitLogin.js"></script>
-        
-        Username: <input type="text" name="username" value=""  id="user" /><br>
-        Password: <input type="password" name="password" value=""  id="pass" /><br>
-        <input id="loginButton" type="button" value="Send Login" name="send" onclick="submitLogin(); " align="middle"/> 
-        <p id="LoginStatus"></p>
-                
-                
-        <p id="LoginResult"> </p>
+        <div align="center">
+            <h2> Login </h2>
+            <script type="text/javascript" src="spin.js"></script>
+            <script type="text/javascript" src="submit.js"></script>
+
+            Username: <input type="text" name="username" value="" id="user" /><br>
+            Password: <input type="password" name="password" value=""  id="pass" /><br><br>
+            <input id="loginButton" type="button" value="Send Login" name="send" onclick="submitLogin(); " align="middle" /> <br><br>
+
+            <b><a href="create.jsp" >Create a User!</a></b>
+            <p id="LoginStatus"></p>
+
+
+            <p id="LoginResult"> </p>
+        </div>
     </body>
 </html>

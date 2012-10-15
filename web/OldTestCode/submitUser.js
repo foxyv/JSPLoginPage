@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-function submitUser(publicKey){
+function submitUser(){
     username = document.getElementById('user').value;
     password = document.getElementById('pass').value;
     
@@ -28,7 +28,7 @@ function submitUser(publicKey){
         radius: 5, // The radius of the inner circle
         corners: 1, // Corner roundness (0..1)
         rotate: 0, // The rotation offset
-        color: '#900000', // #rgb or #rrggbb
+        color: '#000090', // #rgb or #rrggbb
         speed: 1, // Rounds per second
         trail: 60, // Afterglow percentage
         shadow: false, // Whether to render a shadow
@@ -39,8 +39,8 @@ function submitUser(publicKey){
         left: 'auto' // Left position relative to parent in px
     };
     
-    var target = document.getElementById('LoginStatus');
-    var spinner = new Spinner(opts).spin(target);
+    var target = document.getElementById('UserCreateStatus');
+    var createspinner = new Spinner(opts).spin(target);
     
             
     LoginXMLRequestAndHttpResponse.onreadystatechange=function()
@@ -48,11 +48,11 @@ function submitUser(publicKey){
         
         if(LoginXMLRequestAndHttpResponse.readyState == 4 && LoginXMLRequestAndHttpResponse.status==200)
         {
+            
             document.getElementById("UserCreateResult").innerHTML=LoginXMLRequestAndHttpResponse.responseText;
-            if(LoginXMLRequestAndHttpResponse.responseText.search("Login failed!") != -1)
             
+            createspinner.stop();
             
-            spinner.stop();
         }
     }    
 
